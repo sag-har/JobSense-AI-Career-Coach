@@ -1,0 +1,171 @@
+# 🧠 JobSense — AI Career Coach
+
+> Paste a job description. Upload your CV. Get your gap analysis, interview talking points, and rewritten CV bullets in seconds — powered by RAG + FAISS + GPT-4o.
+
+<!-- Replace the line below with your actual Streamlit demo GIF -->
+![JobSense Demo](https://your-gif-url-here.gif)
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?style=for-the-badge&logo=streamlit)](https://your-app.streamlit.app)
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python)](https://python.org)
+[![LangChain](https://img.shields.io/badge/LangChain-0.3-1C3C3C?style=for-the-badge)](https://langchain.com)
+[![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o-412991?style=for-the-badge&logo=openai)](https://openai.com)
+
+---
+
+## 🚀 What it does
+
+Most people apply to jobs blindly — sending the same CV everywhere and hoping for the best. **JobSense** fixes that.
+
+Upload your CV and paste a job description. The app uses **Retrieval-Augmented Generation (RAG)** to read both documents, cross-reference them using two separate FAISS vector stores, and produces a structured career report telling you exactly:
+
+- ✅ Which skills you already have that the JD wants
+- ❌ Which skills are missing (your gaps)
+- 💬 5 talking points to use in the interview
+- ✍️ 3 rewritten CV bullet points tailored to this specific role
+- 📊 A match score (0–100%) so you know where you stand before applying
+
+You can then ask follow-up questions in chat — the bot remembers both documents and the report it generated.
+
+---
+
+## 🏗️ Architecture
+
+```
+CV (PDF)          ──► PyMuPDF ──► Text Chunks ──► OpenAI Embeddings ──► FAISS Store A ──┐
+                                                                                          ├──► Similarity Search
+Job Description   ──► Splitter ──► Text Chunks ──► OpenAI Embeddings ──► FAISS Store B ──┘
+                                                                                          │
+                                                                         Retrieved Chunks ─┤
+                                                                                          ▼
+                                                              System Prompt + Context ──► GPT-4o
+                                                                                          │
+                                                                                          ▼
+                                                                         Pydantic Parser ──► Structured JSON Report
+                                                                                          │
+                                                                                          ▼
+                                                                              Streamlit UI ──► You
+```
+
+**Why two FAISS stores?** Most RAG tutorials query a single document. This project cross-references two separate vector stores simultaneously — the same pattern used in enterprise systems that query a user profile against a policy database. It's harder to build and more impressive to explain.
+
+---
+
+## 🛠️ Tech stack
+
+| Layer | Technology | Why |
+|---|---|---|
+| LLM | GPT-4o via LangChain | Best reasoning for structured analysis |
+| Vector DB | FAISS (local) | Zero cost, zero latency, no signup needed |
+| Embeddings | OpenAI text-embedding-3-small | Fast, cheap, accurate |
+| Document parsing | PyMuPDF | Handles real-world messy PDFs reliably |
+| Output schema | Pydantic v2 | Guarantees structured JSON every time |
+| Memory | ConversationBufferMemory | Follow-up chat remembers full context |
+| UI | Streamlit | Deployed and shareable in minutes |
+| Orchestration | LangChain LCEL | Clean, readable pipeline: prompt \| llm \| parser |
+
+---
+
+## 📁 Project structure
+
+```
+jobsense/
+├── app.py           # Streamlit UI — file upload, report rendering, follow-up chat
+├── ingest.py        # PDF/text → chunks → embeddings → FAISS vector store
+├── generate.py      # Retrieval chain + GPT-4o + Pydantic structured output
+├── schema.py        # CareerReport Pydantic model
+├── .env             # API keys (not committed)
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## ⚡ Run locally
+
+**1. Clone the repo**
+```bash
+git clone https://github.com/YOUR_USERNAME/jobsense.git
+cd jobsense
+```
+
+**2. Install dependencies**
+```bash
+pip install -r requirements.txt
+```
+
+**3. Add your API key**
+```bash
+# Create a .env file
+echo "OPENAI_API_KEY=sk-your-key-here" > .env
+```
+
+**4. Run the app**
+```bash
+streamlit run app.py
+```
+
+Open `http://localhost:8501` in your browser.
+
+---
+
+## 📊 Example output
+
+Given a Senior Python Developer JD and a CV with Django/Flask experience:
+
+```json
+{
+  "match_score": 74,
+  "matched_skills": ["Python", "Django", "REST APIs", "PostgreSQL", "Git"],
+  "missing_skills": ["Kubernetes", "AWS Lambda", "Redis"],
+  "strengths": [
+    "3 years of production Django experience directly matches the JD",
+    "Open source contributions demonstrate code quality discipline",
+    "PostgreSQL expertise covers the database requirement fully"
+  ],
+  "rewritten_bullets": [
+    "Architected and deployed a Django REST API serving 50k+ daily requests with 99.9% uptime",
+    "Reduced query response time by 40% through PostgreSQL indexing and query optimisation",
+    "Led migration of monolithic Flask app to microservices, cutting deployment time by 60%"
+  ],
+  "interview_talking_points": [
+    "Lead with your Django production experience — it directly matches their core requirement",
+    "Frame your REST API work in terms of scale and uptime, not just features built",
+    "For the Kubernetes gap: mention you're actively learning it and show your progress",
+    "Use your open source contributions as proof of code review and collaboration skills",
+    "Ask them about their current infrastructure pain points — shows strategic thinking"
+  ]
+}
+```
+
+---
+
+## ⚠️ Limitations
+
+- **Scanned PDFs not supported** — needs OCR (Tesseract integration planned)
+- **Single session memory** — conversation history resets on page refresh; persistent memory via LangGraph is a planned improvement
+- **English only** — prompt engineering optimised for English JDs and CVs
+- **No authentication** — single-user design; multi-user support would require per-user FAISS stores
+
+---
+
+## 🗺️ Roadmap
+
+- [ ] Add OCR support for scanned CVs (Tesseract / AWS Textract)
+- [ ] Persistent cross-session memory with LangGraph
+- [ ] Export report as PDF
+- [ ] Support multiple JD comparison (which job fits me best?)
+- [ ] RAGAS evaluation score for retrieval quality
+
+---
+
+## 🧑‍💻 Built by
+
+**Your Name** — [LinkedIn](https://linkedin.com/in/yourprofile) · [GitHub](https://github.com/yourusername)
+
+Built as a portfolio project while learning LangChain — and also because I genuinely needed it while applying for jobs.
+
+---
+
+## 📄 License
+
+MIT — use it, fork it, improve it.
