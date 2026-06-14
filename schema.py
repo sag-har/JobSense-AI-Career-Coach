@@ -9,3 +9,4 @@ class CareerReport(BaseModel):
     strengths: List[str]                 # 3 things to highlight in interview
     rewritten_bullets: List[str]         # 3 improved CV bullet points
     interview_talking_points: List[str]  # 5 concrete things to say
+    
