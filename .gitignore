@@ -3,3 +3,6 @@ __pycache__/
 *.pyc
 venv/
 .streamlit/secrets.toml
+*.pdf
+faiss_index/
+.DS_Store
