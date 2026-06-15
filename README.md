@@ -160,7 +160,7 @@ GROQ_API_KEY = "gsk_your_key_here"
 ### Step 6 — Deploy
 Click **"Deploy"**. In ~2 minutes you get a live public URL:
 ```
-https://muneeracodes-jobsense-ai-career-coach-app-xxxx.streamlit.app
+https://jobsense-ai-career-coach-g9ucp9ucell8uzph7zrb2e.streamlit.app/
 ```
 
 ---
