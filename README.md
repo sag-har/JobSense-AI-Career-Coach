@@ -2,12 +2,15 @@
 
 > Upload your CV. Paste a job description. Get your match score, skill gap analysis, tailored interview talking points, and rewritten CV bullets — in under 10 seconds.
 
-![JobSense Screenshot](screenshot.png)
-
 > 🎬 **Live demo:**
 
-
 ![JobSense Demo](demo.gif)
+
+> 
+
+![JobSense Screenshot](screenshot.png)
+
+
 
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.45-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io)
