@@ -99,7 +99,7 @@ JobSense-AI-Career-Coach/
 
 **1. Clone the repo**
 ```bash
-git clone https://github.com/muneeracodes/JobSense-AI-Career-Coach.git
+git clone https://github.com/sag-har/JobSense-AI-Career-Coach.git
 cd JobSense-AI-Career-Coach
 ```
 
@@ -150,7 +150,7 @@ Visit [share.streamlit.io](https://share.streamlit.io) → sign in with GitHub �
 ### Step 4 — Fill in the form
 | Field | Value |
 |---|---|
-| Repository | `muneeracodes/JobSense-AI-Career-Coach` |
+| Repository | `sag-har/JobSense-AI-Career-Coach` |
 | Branch | `main` |
 | Main file path | `app.py` |
 
@@ -219,7 +219,7 @@ https://jobsense-ai-career-coach-g9ucp9ucell8uzph7zrb2e.streamlit.app/
 
 ## 🧑‍💻 Built by
 
-**Muneera** — [@muneeracodes](https://github.com/muneeracodes)
+**Saghar** — [@sag-har](https://github.com/sag-har)
 🚀 **Live App:** [jobsense-ai-career-coach-g9ucp9ucell8uzph7zrb2e.streamlit.app](https://jobsense-ai-career-coach-g9ucp9ucell8uzph7zrb2e.streamlit.app/)
 Built to solve a real problem while job hunting — and as a portfolio project demonstrating LangChain RAG with dual vector stores.
 
